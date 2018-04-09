@@ -47,8 +47,8 @@ int main(){
 
 	NN NeuralNetwork(3,inputSize,hiddenSize,outputSize,0.1,0.1);
 	NeuralNetwork.saveweights("weights1.csv");
-	int i = 100,j=20;
-	while(trainData.good() and i>0){
+
+	while(trainData.good()){
 		getline(trainData,Data);
 		if(Data == "")
 			break;
@@ -56,7 +56,6 @@ int main(){
 		vector<long double> output(outputSize,0);
 		output[0] = data[0]; 
 		NeuralNetwork.train(vector<long double>(data.begin()+1,data.end()),output);
-		i--;
 	}
 	trainData.close();
 
@@ -64,13 +63,12 @@ int main(){
 	ifstream testData("sign_mnist_test.csv");
 	ofstream results("results.csv");
 	getline(testData,Data);
-	while(testData.good() and j>0){
+	while(testData.good()){
 		getline(testData,Data);
 		if(Data == "")
 			break;
 		vector<long double> data = split(Data,',');
 		results<<NeuralNetwork.getoutput(vector<long double>(data.begin()+1,data.end()))<<','<<data[0]*(long double)25<<'\n';
-		j--;
 	}
 	testData.close();
 	results.close();
