@@ -41,7 +41,7 @@ int main(){
 
 	ifstream trainData("sign_mnist_train.csv");
 	getline(trainData,Data);
-	int inputSize = count(Data.begin(), Data.end(), ',')-1;
+	int inputSize = count(Data.begin(), Data.end(), ',');
 	int outputSize = 25;
 	vector<int> hiddenSize = {10};
 
@@ -140,7 +140,7 @@ vector<long double> NN::forwardPass(vector<long double> _input){
 		_output = sigmoid(_input*weights[i]);	
 		_input = _output;
 	}
-	for(int i=0;i<25;i++)
+	for(int i=0;i<_output.size();i++)
 		_output[i] = rand()/((long double)RAND_MAX);
 	
 	return _output;
